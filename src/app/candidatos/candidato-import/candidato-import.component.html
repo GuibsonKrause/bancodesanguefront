@@ -1,1 +1,47 @@
-<p>candidato-import works!</p>
+<div class="candidato-import-container">
+    <form (submit)="onSubmit()">
+      <input type="file" (change)="onFileSelected($event)" accept=".pdf" />
+      <button type="submit" [disabled]="!file">Enviar Arquivo</button>
+    </form>
+  
+    <div *ngIf="resultado" class="resultados-container">
+      <h2>Resultados:</h2>
+      <div>
+        <h3>Candidatos por Estado:</h3>
+        <ul>
+          <li *ngFor="let estado of resultado?.candidatosPorEstado | keyvalue">
+            {{ estado.key }}: {{ estado.value }}
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h3>IMC Médio por Faixa Etária:</h3>
+        <ul>
+          <li *ngFor="let faixa of resultado?.imcMedioPorFaixaEtaria | keyvalue">
+            {{ faixa.key }}: {{ faixa.value | number:'1.0-2' }}
+          </li>
+        </ul>
+      </div>
+      <div>
+        <p>Percentual de Obesos Homens: {{ resultado?.percentualObesosHomens | number:'1.0-2' }}%</p>
+        <p>Percentual de Obesos Mulheres: {{ resultado?.percentualObesosMulheres | number:'1.0-2' }}%</p>
+      </div>
+      <div>
+        <h3>Média de Idade por Tipo Sanguíneo:</h3>
+        <ul>
+          <li *ngFor="let tipo of resultado?.mediaIdadePorTipoSanguineo | keyvalue">
+            {{ tipo.key }}: {{ tipo.value | number:'1.0-2' }}
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h3>Possíveis Doadores por Tipo Sanguíneo:</h3>
+        <ul>
+          <li *ngFor="let tipo of resultado?.possiveisDoadoresPorTipoSanguineo | keyvalue">
+            {{ tipo.key }}: {{ tipo.value }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
