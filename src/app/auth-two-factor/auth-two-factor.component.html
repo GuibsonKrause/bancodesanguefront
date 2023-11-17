@@ -1,0 +1,10 @@
+<div class="two-factor-auth-container">
+    <h2>Autenticação de Dois Fatores</h2>
+    <form (ngSubmit)="verifyToken()">
+      <input type="text" placeholder="Digite o token 2FA" [(ngModel)]="token" name="token" required>
+      <button type="submit">Verificar</button>
+    </form>
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+    <p *ngIf="successMessage" class="success-message">{{ successMessage }}</p>
+  </div>
+  

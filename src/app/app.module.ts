@@ -11,9 +11,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { AuthTwoFactorComponent } from './auth-two-factor/auth-two-factor.component';
+import { FormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
-  declarations: [AppComponent, CandidatoImportComponent],
+  declarations: [AppComponent, CandidatoImportComponent, AuthTwoFactorComponent, LoginComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -24,6 +27,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatProgressBarModule,
     MatIconModule,
     FlexLayoutModule,
+    FormsModule,
   ],
   providers: [CandidatoService],
   bootstrap: [AppComponent],
