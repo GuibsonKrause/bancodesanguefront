@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,14 +11,9 @@ export class CandidatoService {
   constructor(private http: HttpClient) {}
 
   importarCandidatos(file: File): Observable<any> {
-    const formData: FormData = new FormData();
+    const formData = new FormData();
     formData.append('file', file, file.name);
 
-    return this.http.post(this.apiUrl, formData, {
-      headers: new HttpHeaders({
-        Accept: 'application/json',
-      }),
-      responseType: 'json',
-    });
+    return this.http.post(this.apiUrl, formData);
   }
 }

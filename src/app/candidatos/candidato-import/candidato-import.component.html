@@ -1,8 +1,35 @@
-<div>
-  <input
-    type="file"
-    (change)="onFileChanged($event)"
-    accept="application/pdf"
-  />
-  <button (click)="onUpload()">Upload</button>
-</div>
+<mat-card class="import-card">
+  <mat-card-header>
+    <mat-card-title>Sistema Doador de Sangue</mat-card-title>
+    <mat-card-subtitle
+      >Importe o arquivo PDF para processar as informações dos
+      doadores</mat-card-subtitle
+    >
+  </mat-card-header>
+  <mat-card-content>
+    <div class="file-input-container">
+      <button mat-stroked-button color="primary" (click)="fileInput.click()">
+        Escolher arquivo
+      </button>
+      <input
+        type="file"
+        hidden
+        #fileInput
+        (change)="onFileChanged($event)"
+        accept=".pdf"
+      />
+      <span *ngIf="selectedFile">{{ selectedFile.name }}</span>
+    </div>
+    <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+  </mat-card-content>
+  <mat-card-actions>
+    <button
+      mat-raised-button
+      color="accent"
+      (click)="onUpload()"
+      [disabled]="!selectedFile || isLoading"
+    >
+      Upload e Processar
+    </button>
+  </mat-card-actions>
+</mat-card>
