@@ -12,6 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [AppComponent, CandidatoImportComponent],
@@ -24,6 +25,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatProgressBarModule,
     MatIconModule,
+    NgxChartsModule,
   ],
   providers: [CandidatoService],
   bootstrap: [AppComponent],

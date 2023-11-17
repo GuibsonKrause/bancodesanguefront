@@ -1,6 +1,7 @@
 .import-card {
   max-width: 100%;
   margin: 2em auto;
+  padding: 1em;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,16 +10,34 @@
 .file-input-container {
   display: flex;
   align-items: center;
-  width: 100%;
+  justify-content: center;
   margin-top: 1em;
 }
 
-.file-input-container input[type="file"] {
-  display: none;
+.mat-raised-button {
+  margin-left: 1em;
 }
 
-.mat-raised-button {
-  margin: 0 1em;
+.result-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1em;
+  margin-top: 2em;
+  width: 100%;
+  justify-items: center;
+}
+
+.result-card {
+  padding: 1em;
+  background-color: #f7f7f7;
+  border: 1px solid #e1e1e1;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.mat-card-title {
+  color: #1976d2;
+  font-weight: bold;
 }
 
 @media (max-width: 768px) {

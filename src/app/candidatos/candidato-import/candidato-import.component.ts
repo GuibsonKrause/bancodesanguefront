@@ -7,8 +7,9 @@ import { CandidatoService } from 'src/app/shared/services/candidato.service';
   styleUrls: ['./candidato-import.component.css'],
 })
 export class CandidatoImportComponent {
-  selectedFile: File | null = null; 
-  isLoading: boolean = false; 
+  selectedFile: File | null = null;
+  isLoading = false;
+  resultado: any = null;
 
   constructor(private candidatoService: CandidatoService) {}
 
@@ -17,25 +18,53 @@ export class CandidatoImportComponent {
   }
 
   onUpload() {
-    if (this.selectedFile) { 
-      this.isLoading = true; 
-      this.candidatoService.importarCandidatos(this.selectedFile).subscribe(
-        (resultado) => {
-          this.isLoading = false; 
-          //debugger
-          console.log('Dados importados com sucesso:', resultado);
-          // Aqui você pode adicionar uma mensagem de sucesso ou redirecionar o usuário
+    if (this.selectedFile) {
+      this.isLoading = true;
+      this.candidatoService.importarCandidatos(this.selectedFile).subscribe({
+        next: (resultado) => {
+          this.isLoading = false;
+          this.resultado = resultado;
         },
-        (error) => {
-          this.isLoading = false; // Para o indicador de carregamento em caso de erro
-          //debugger
+        error: (error) => {
+          this.isLoading = false;
           console.error('Erro ao importar dados:', error);
-          // Aqui você pode adicionar uma mensagem de erro para o usuário
-        }
-      );
+        },
+      });
     } else {
-      // Aqui você pode adicionar uma mensagem para avisar que nenhum arquivo foi selecionado
       console.warn('Por favor, selecione um arquivo para fazer upload.');
     }
+  }
+
+  getResultArray(data: any): Array<any> {
+    return [
+      { title: 'Candidatos Por Estado', data: data.candidatosPorEstado },
+      {
+        title: 'IMC Médio Por Faixa Etária',
+        data: data.imcMedioPorFaixaEtaria,
+      },
+      {
+        title: 'Percentual de Obesos',
+        data: {
+          Homens: `${data.percentualObesosHomens}%`,
+          Mulheres: `${data.percentualObesosMulheres}%`,
+        },
+      },
+      {
+        title: 'Média de Idade Por Tipo Sanguíneo',
+        data: data.mediaIdadePorTipoSanguineo,
+      },
+      {
+        title: 'Possíveis Doadores Por Tipo Sanguíneo',
+        data: data.possiveisDoadoresPorTipoSanguineo,
+      },
+    ];
+  }
+
+  isObjectType(value: any): boolean {
+    return typeof value === 'object' && value !== null;
+  }
+
+  getObjectKeys(obj: any): string[] {
+    return Object.keys(obj);
   }
 }

@@ -6,6 +6,7 @@
       doadores</mat-card-subtitle
     >
   </mat-card-header>
+
   <mat-card-content>
     <div class="file-input-container">
       <button mat-stroked-button color="primary" (click)="fileInput.click()">
@@ -22,6 +23,7 @@
     </div>
     <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
   </mat-card-content>
+
   <mat-card-actions>
     <button
       mat-raised-button
@@ -32,4 +34,26 @@
       Upload e Processar
     </button>
   </mat-card-actions>
+
+  <div *ngIf="resultado" class="result-container">
+    <mat-card
+      class="result-card"
+      *ngFor="let item of getResultArray(resultado)"
+    >
+      <mat-card-header>
+        <mat-card-title>{{ item.title }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ng-container *ngIf="isObjectType(item.data)">
+          <div *ngFor="let key of getObjectKeys(item.data)">
+            <strong>{{ key }}</strong
+            >: {{ item.data[key] }}
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!isObjectType(item.data)">
+          {{ item.data }}
+        </ng-container>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </mat-card>
