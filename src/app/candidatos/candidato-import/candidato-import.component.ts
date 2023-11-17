@@ -67,4 +67,12 @@ export class CandidatoImportComponent {
   getObjectKeys(obj: any): string[] {
     return Object.keys(obj);
   }
+
+  get estadosArray(): { sigla: string; quantidade: number }[] {
+    const estados = this.resultado?.candidatosPorEstado || {};
+    return Object.entries(estados).map(([sigla, quantidade]) => ({
+      sigla,
+      quantidade: quantidade as number, // asserção de tipo aqui
+    }));
+  }
 }

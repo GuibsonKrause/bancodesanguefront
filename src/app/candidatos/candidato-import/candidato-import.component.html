@@ -1,59 +1,112 @@
+<!-- candidato-import.component.html -->
 <mat-card class="import-card">
   <mat-card-header>
     <mat-card-title>Sistema Doador de Sangue</mat-card-title>
-    <mat-card-subtitle
-      >Importe o arquivo PDF para processar as informações dos
-      doadores</mat-card-subtitle
-    >
+    <mat-card-subtitle>
+      Importe o arquivo PDF para processar as informações dos doadores
+    </mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content>
     <div class="file-input-container">
-      <button mat-stroked-button color="primary" (click)="fileInput.click()">
-        Escolher arquivo
-      </button>
-      <input
-        type="file"
-        hidden
-        #fileInput
-        (change)="onFileChanged($event)"
-        accept=".pdf"
-      />
-      <span *ngIf="selectedFile">{{ selectedFile.name }}</span>
+      <input type="file" hidden #fileInput (change)="onFileChanged($event)" accept=".pdf" />
+      <button mat-stroked-button color="primary" (click)="fileInput.click()">Escolher arquivo</button>
+      <span *ngIf="selectedFile" class="selected-file-name">{{ selectedFile.name }}</span>
+      <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
     </div>
-    <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
   </mat-card-content>
 
-  <mat-card-actions>
-    <button
-      mat-raised-button
-      color="accent"
-      (click)="onUpload()"
-      [disabled]="!selectedFile || isLoading"
-    >
+  <mat-card-actions class="actions-container">
+    <button mat-raised-button color="accent" (click)="onUpload()" [disabled]="!selectedFile || isLoading">
       Upload e Processar
     </button>
   </mat-card-actions>
+</mat-card>
 
   <div *ngIf="resultado" class="result-container">
-    <mat-card
-      class="result-card"
-      *ngFor="let item of getResultArray(resultado)"
-    >
+    <mat-card class="result-card horizontal-card">
       <mat-card-header>
-        <mat-card-title>{{ item.title }}</mat-card-title>
+        <mat-card-title>Candidatos Por Estado</mat-card-title>
       </mat-card-header>
-      <mat-card-content>
-        <ng-container *ngIf="isObjectType(item.data)">
-          <div *ngFor="let key of getObjectKeys(item.data)">
-            <strong>{{ key }}</strong
-            >: {{ item.data[key] }}
-          </div>
-        </ng-container>
-        <ng-container *ngIf="!isObjectType(item.data)">
-          {{ item.data }}
-        </ng-container>
+      <mat-card-content class="horizontal-card-content">
+        <div class="horizontal-card-item" *ngFor="let estado of estadosArray">
+          <strong>{{ estado.sigla }}</strong>: {{ estado.quantidade }}
+        </div>
       </mat-card-content>
     </mat-card>
+    <div class="vertical-cards-container">
+      <!-- Card de IMC Médio Por Faixa Etária -->
+      <mat-card class="result-card">
+        <mat-card-header>
+          <mat-card-title>IMC Médio Por Faixa Etária</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="data-container">
+          <div
+            *ngFor="let key of getObjectKeys(resultado.imcMedioPorFaixaEtaria)"
+            class="data-item"
+          >
+            <span class="data-label">{{ key }}</span
+            >:
+            <span class="data-value">{{
+              resultado.imcMedioPorFaixaEtaria[key]
+            }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Card de Percentual de Obesos -->
+      <mat-card class="result-card">
+        <mat-card-header>
+          <mat-card-title>Percentual de Obesos</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          Homens: {{ resultado.percentualObesosHomens }}%<br />
+          Mulheres: {{ resultado.percentualObesosMulheres }}%
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Card de Média de Idade Por Tipo Sanguíneo -->
+      <mat-card class="result-card">
+        <mat-card-header>
+          <mat-card-title>Média de Idade Por Tipo Sanguíneo</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="data-container">
+          <div
+            *ngFor="
+              let key of getObjectKeys(resultado.mediaIdadePorTipoSanguineo)
+            "
+            class="data-item"
+          >
+            <span class="data-label">{{ key }}</span
+            >:
+            <span class="data-value">{{
+              resultado.mediaIdadePorTipoSanguineo[key]
+            }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Card de Possíveis Doadores Por Tipo Sanguíneo -->
+      <mat-card class="result-card">
+        <mat-card-header>
+          <mat-card-title>Possíveis Doadores Por Tipo Sanguíneo</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="data-container">
+          <div
+            *ngFor="
+              let key of getObjectKeys(
+                resultado.possiveisDoadoresPorTipoSanguineo
+              )
+            "
+            class="data-item"
+          >
+            <span class="data-label">{{ key }}</span
+            >:
+            <span class="data-value">{{
+              resultado.possiveisDoadoresPorTipoSanguineo[key]
+            }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
-</mat-card>
