@@ -8,10 +8,11 @@ describe('CandidatoImportComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CandidatoImportComponent]
-    })
-    .compileComponents();
-    
+      declarations: [CandidatoImportComponent],
+    }).compileComponents();
+  });
+
+  beforeEach(() => {
     fixture = TestBed.createComponent(CandidatoImportComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
