@@ -72,7 +72,7 @@ export class CandidatoImportComponent {
     const estados = this.resultado?.candidatosPorEstado || {};
     return Object.entries(estados).map(([sigla, quantidade]) => ({
       sigla,
-      quantidade: quantidade as number, // asserção de tipo aqui
+      quantidade: quantidade as number, 
     }));
   }
 }
